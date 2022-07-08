@@ -3,50 +3,41 @@ class TicTacToe
     @board = board
   end
 
+  def is_winner arr
+    # takes an array, if all values are the same and not a blank ' ' => return that value
+    set = arr.uniq
+    return set[0] if set.length == 1 && set[0] != " "
+  end
+
   def winner
-    row1 = @board[0]
-    row2 = @board[1]
-    row3 = @board[2]
+    @board.each_with_index do |row, idx|
+      # row checks
+      return is_winner(row) if is_winner(row)
 
-    # row checks
-
-    @board.each do |row|
-      # for each row of board, if all values are the same and not a blank ' ' => return that value
-      set = row.uniq
-
-      return set[0] if set.length == 1 && set[0] != " "
-    end
-
-    # column checks
-
-    @board.each_with_index do |col, idx|
+      # column checks
+      # turns column into row
       column_vals = []
 
-      @board.each do |row|
-        column_vals << row[idx]
+      @board.each do |col|
+        column_vals << col[idx]
       end
 
-      set = column_vals.uniq
-      return set[0] if set.length == 1 && set[0] != " "
+      return is_winner(column_vals) if is_winner(column_vals)
     end
 
     # diagonal checks
+    # turns diagonal into row
+    back_vals = []
+    for_vals = []
 
-    if row1[0] == "o" && row2[1] == "o" && row3[2] == "o"
-      return "o"
+    @board.length.times do |idx|
+      back_vals << @board[idx][idx]
+      for_vals << @board[@board.length - 1 - idx][idx]
     end
 
-    if row1[2] == "o" && row2[1] == "o" && row3[0] == "o"
-      return "o"
-    end
+    return is_winner(back_vals) if is_winner(back_vals)
+    return is_winner(for_vals) if is_winner(for_vals)
 
-    if row1[0] == "x" && row2[1] == "x" && row3[2] == "x"
-      return "x"
-    end
-
-    if row1[2] == "x" && row2[1] == "x" && row3[0] == "x"
-      return "x"
-    end
 
     return "draw"
   end
