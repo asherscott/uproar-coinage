@@ -3,42 +3,45 @@ class TicTacToe
     @board = board
   end
 
-  def is_winner array
-    # if all values in array are identical and not blank ' ' => winner
-    set = array.uniq
-    return set[0] if set.length == 1 && set[0] != " "
+  def winner
+    # rows
+    @board.each do |row|
+      return check_row(row) if check_row(row)
+    end
+
+    # columns
+    @board.transpose.each do |col|
+      return check_row(col) if check_row(col)
+    end
+
+    # diagonals
+    return check_diags if check_diags
+
+    no_winners
   end
 
-  def winner
-    @board.each_with_index do |row, idx|
-      # row checks
-      return is_winner(row) if is_winner(row)
+  def check_row array
+    # if all values in array are identical and not blank ' ' => winner
+    winning_char = array.uniq
+    return winning_char.first if winning_char.length == 1 && winning_char.first != " "
+  end
 
-      # column checks
-      # turns column into array
-      column_vals = []
-
-      @board.each do |col|
-        column_vals << col[idx]
-      end
-
-      return is_winner(column_vals) if is_winner(column_vals)
-    end
-
-    # diagonal checks
-    # turns diagonal into array
-    back_vals = []
-    for_vals = []
+  def check_diags
+    # turns each diagonal into an array and checks array (row)
+    back_diag = []
+    for_diag = []
 
     @board.length.times do |idx|
-      back_vals << @board[idx][idx]
-      for_vals << @board[@board.length - 1 - idx][idx]
+      back_diag << @board[idx][idx]
+      for_diag << @board[@board.length - 1 - idx][idx]
     end
 
-    return is_winner(back_vals) if is_winner(back_vals)
-    return is_winner(for_vals) if is_winner(for_vals)
+    return check_row(back_diag) if check_row(back_diag)
+    return check_row(for_diag) if check_row(for_diag)
+  end
 
-    # unfinished game check
+  def no_winners
+    # game is a draw if there are no blank spaces
     @board.each do |row|
       return "unfinished" if row.include?(" ")
     end
