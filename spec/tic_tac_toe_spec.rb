@@ -153,6 +153,22 @@ describe TicTacToe do
 
       expect(TicTacToe.new(board).winner).to eq("draw")
     end
+
+    it "returns 'draw' when the board is a draw" do
+      board = [
+        ["o", "x", "x", "o", "x", "o", "x", "x", "x"],
+        ["x", "x", "o", "x", "o", "x", "o", "x", "x"],
+        ["o", "x", "x", "o", "x", "o", "x", "x", "x"],
+        ["x", "x", "o", "x", "o", "x", "o", "x", "x"],
+        ["o", "x", "x", "o", "x", "o", "x", "x", "x"],
+        ["o", "o", "o", "o", "o", "o", "o", "o", "x"],
+        ["x", "x", "o", "o", "x", "x", "o", "x", "o"],
+        ["o", "x", "x", "x", "o", "o", "x", "x", "o"],
+        ["x", "x", "o", "o", "x", "x", "o", "x", "o"]
+      ]
+
+      expect(TicTacToe.new(board).winner).to eq("draw")
+    end
   end
 
   describe "5 x 5 board" do
@@ -205,12 +221,168 @@ describe TicTacToe do
     end
   end
 
+  describe "7 x 7 board" do
+    it "returns the correct winner when match found on a row" do
+      board = [
+        ["x", "x", " ", " ", "x", " ", " "],
+        ["x", "x", "x", " ", " ", " ", " "],
+        [" ", " ", "x", " ", " ", "o", " "],
+        [" ", "o", " ", "x", "o", " ", " "],
+        ["o", " ", "x", "o", "x", " ", " "],
+        ["o", "o", "o", "o", "o", "o", "o"],
+        [" ", " ", " ", " ", " ", "x", "x"]
+      ]
+
+      expect(TicTacToe.new(board).winner).to eq("o")
+    end
+
+    it "returns the correct winner when match found on a column" do
+      board = [
+        [" ", "x", " ", " ", "x", " ", " "],
+        ["x", " ", "x", " ", "x", " ", " "],
+        [" ", " ", " ", " ", "x", "o", " "],
+        [" ", "o", " ", "x", "x", " ", " "],
+        ["o", " ", "x", " ", "x", " ", " "],
+        ["o", "o", " ", "o", "x", "o", "o"],
+        [" ", " ", " ", " ", "x", " ", "x"]
+      ]
+
+      expect(TicTacToe.new(board).winner).to eq("x")
+    end
+
+    it "returns the correct winner when match found on a forward diagonal" do
+      board = [
+        ["x", "x", " ", " ", "x", " ", "o"],
+        ["x", " ", "x", " ", " ", "o", " "],
+        [" ", " ", " ", " ", "o", " ", " "],
+        [" ", "o", " ", "o", " ", " ", " "],
+        ["o", " ", "o", " ", "x", " ", " "],
+        [" ", "o", " ", "o", " ", "o", "o"],
+        ["o", " ", " ", " ", " ", "x", "x"]
+      ]
+
+      expect(TicTacToe.new(board).winner).to eq("o")
+    end
+
+    it "returns the correct winner when match found on a backward diagonal" do
+      board = [
+        ["x", " ", " ", " ", "x", " ", " "],
+        [" ", "x", " ", " ", " ", " ", " "],
+        [" ", " ", "x", " ", " ", "o", " "],
+        [" ", "o", " ", "x", "o", " ", " "],
+        ["o", " ", " ", "o", "x", " ", " "],
+        ["o", "o", "o", "o", " ", "x", "o"],
+        [" ", " ", " ", " ", " ", " ", "x"]
+      ]
+
+      expect(TicTacToe.new(board).winner).to eq("x")
+    end
+  end
+
+  describe "9 x 9 board" do
+    it "returns the correct winner when match found on a row" do
+      board = [
+        ["x", " ", " ", " ", " ", " ", " ", " ", " "],
+        ["x", " ", " ", " ", " ", " ", " ", " ", " "],
+        ["x", " ", " ", " ", " ", " ", " ", " ", " "],
+        ["x", " ", " ", " ", " ", " ", " ", " ", " "],
+        ["x", " ", " ", " ", " ", " ", " ", " ", " "],
+        ["x", " ", " ", " ", " ", " ", " ", " ", " "],
+        ["x", " ", " ", " ", " ", " ", " ", " ", " "],
+        ["x", " ", " ", " ", " ", " ", " ", " ", " "],
+        ["o", "o", "o", "o", "o", "o", "o", "o", "o"]
+      ]
+
+      expect(TicTacToe.new(board).winner).to eq("o")
+    end
+
+    it "returns the correct winner when match found on a column" do
+      board = [
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        ["o", "o", "o", "o", "o", "o", "o", "x", "o"],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "]
+      ]
+
+      expect(TicTacToe.new(board).winner).to eq("x")
+    end
+
+    it "returns the correct winner when match found on a forward diagonal" do
+      board = [
+        [" ", " ", " ", " ", " ", " ", " ", " ", "o"],
+        [" ", " ", "x", " ", "x", " ", " ", "o", " "],
+        [" ", " ", " ", " ", " ", " ", "o", " ", " "],
+        [" ", "x", " ", " ", " ", "o", " ", " ", " "],
+        [" ", " ", " ", " ", "o", " ", " ", " ", " "],
+        [" ", " ", "x", "o", " ", " ", " ", " ", " "],
+        ["x", " ", "o", " ", " ", " ", "x", " ", " "],
+        [" ", "o", " ", " ", "x", " ", " ", "x", " "],
+        ["o", " ", " ", " ", " ", " ", " ", " ", " "]
+      ]
+
+      expect(TicTacToe.new(board).winner).to eq("o")
+    end
+
+    it "returns the correct winner when match found on a backward diagonal" do
+      board = [
+        ["x", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", "x", " ", " ", " ", "o", "o", "o", " "],
+        [" ", " ", "x", " ", " ", "o", " ", " ", " "],
+        [" ", " ", " ", "x", " ", "o", " ", " ", " "],
+        [" ", " ", " ", " ", "x", "o", " ", " ", " "],
+        [" ", " ", " ", " ", " ", "x", " ", " ", " "],
+        ["o", "o", "o", "o", "o", "o", "x", " ", " "],
+        ["o", " ", " ", " ", " ", " ", " ", "x", " "],
+        ["o", " ", " ", " ", " ", " ", " ", " ", "x"]
+      ]
+
+      expect(TicTacToe.new(board).winner).to eq("x")
+    end
+  end
+
   describe "unfinished" do
     it "returns 'unfinished' when the board not finished yet" do
       board = [
         ["o", "x", "o"],
         ["o", "x", "x"],
         ["x", "o", " "]
+      ]
+
+      expect(TicTacToe.new(board).winner).to eq("unfinished")
+    end
+
+    it "returns 'unfinished' when the board not finished yet" do
+      board = [
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        ["o", "o", "o", "o", "o", "o", "o", " ", "o"],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "],
+        [" ", " ", " ", " ", " ", " ", " ", "x", " "]
+      ]
+
+      expect(TicTacToe.new(board).winner).to eq("unfinished")
+    end
+
+    it "returns 'unfinished' when the board not finished yet" do
+      board = [
+        [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " "]
       ]
 
       expect(TicTacToe.new(board).winner).to eq("unfinished")
