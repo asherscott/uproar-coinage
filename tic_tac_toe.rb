@@ -3,9 +3,9 @@ class TicTacToe
     @board = board
   end
 
-  def is_winner arr
-    # takes an array, if all values are the same and not a blank ' ' => return that value
-    set = arr.uniq
+  def is_winner array
+    # if all values in array are identical and not blank ' ' => winner
+    set = array.uniq
     return set[0] if set.length == 1 && set[0] != " "
   end
 
@@ -15,7 +15,7 @@ class TicTacToe
       return is_winner(row) if is_winner(row)
 
       # column checks
-      # turns column into row
+      # turns column into array
       column_vals = []
 
       @board.each do |col|
@@ -26,7 +26,7 @@ class TicTacToe
     end
 
     # diagonal checks
-    # turns diagonal into row
+    # turns diagonal into array
     back_vals = []
     for_vals = []
 
@@ -38,6 +38,10 @@ class TicTacToe
     return is_winner(back_vals) if is_winner(back_vals)
     return is_winner(for_vals) if is_winner(for_vals)
 
+    # unfinished game check
+    @board.each do |row|
+      return "unfinished" if row.include?(" ")
+    end
 
     return "draw"
   end

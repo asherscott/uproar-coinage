@@ -206,7 +206,7 @@ describe TicTacToe do
   end
 
   describe "unfinished" do
-    xit "returns 'unfinished' when the board not finished yet" do
+    it "returns 'unfinished' when the board not finished yet" do
       board = [
         ["o", "x", "o"],
         ["o", "x", "x"],
