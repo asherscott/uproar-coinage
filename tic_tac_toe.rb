@@ -1,6 +1,7 @@
 class TicTacToe
   def initialize(board)
     @board = board
+    @center = @board[(@board.length-1) / 2][(@board.length-1) / 2]
   end
 
   def winner
@@ -15,7 +16,9 @@ class TicTacToe
     end
 
     # diagonals
-    check_diags
+    return @center if check_diags
+
+    no_winners
   end
 
   def check_row array
@@ -24,19 +27,16 @@ class TicTacToe
   end
 
   def check_diags
-    # turns each diagonal into an array and checks array (row)
     back_diag = []
     for_diag = []
 
     @board.length.times do |idx|
       back_diag << @board[idx][idx]
-      for_diag << @board[@board.length - 1 - idx][idx]
+      for_diag << @board[-idx - 1][idx]
     end
 
-    return back_diag.first if check_row(back_diag)
-    return for_diag.first if check_row(for_diag)
-
-    no_winners
+    # regardless of winner, board's center value will always be winner
+    check_row(back_diag) || check_row(for_diag)
   end
 
   def no_winners
